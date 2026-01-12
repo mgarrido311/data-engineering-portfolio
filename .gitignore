@@ -1,0 +1,22 @@
+# Docker volumes and data
+02_Docker/data/
+**/data/
+
+# Docker logs
+*.log
+
+# Environment files
+.env
+
+# Certificates
+*.pem
+*.key
+*.crt
+
+# Database files
+*.sqlite
+*.db
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,43 @@
+version: "3.7"
+
+
+services:
+  postgres:
+    container_name: postgres-container
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+        - POSTGRES_USER=admin
+        - POSTGRES_PASSWORD=Tldupvs.12
+        - POSTGRES_DB=postgres             
+    volumes:      
+      - ./data:/var/lib/postgresql #. significa dentro de la carpeta donde corro el docker compose, ahi esta DATA y crea dentro de data las otras carpetas si no existen 
+      # run ini scripts por unica vez
+      - ./config/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      
+
+    networks:
+      - postgres-latest-net
+      
+  pgadmin:
+    # host: host.docker.internal para conectar el pgadmin al postgres.
+    container_name: pgadmin-latest
+    image: dpage/pgadmin4:latest
+    ports:
+      - "5052:80"
+    environment:
+      - GUNICORN_THREADS=1
+      - PGADMIN_DEFAULT_EMAIL=postgres@email.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
+
+    volumes:      
+      - ./pgadmin:/var/lib/pgadmin
+      
+    networks:
+      - postgres-latest-net
+        
+    
+networks:
+    postgres-latest-net: {}
+        
